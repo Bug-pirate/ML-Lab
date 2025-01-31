@@ -23,6 +23,7 @@ data = data.drop(['S.No.'], axis=1)
 data.info()
 
 
+# Creating Features
 from datetime import date
 
 date.today().year
@@ -34,6 +35,8 @@ data['Model'] = data.Name.str.split().str.get(1) + data.Name.str.split().str.get
 data[['Name', 'Brand', 'Model']]
 
 
+
+# Data Cleaning
 data.Brand.unique()
 data.Brand.nunique()
 
@@ -44,8 +47,10 @@ data["Brand"].replace({"ISUZU": "Isuzu", "Mini": "Mini Cooper", "Land": "Land Ro
 
 
 
-# EDA
+# EDA - Exploratory Data Analysis
 
+
+# Statistics Summary
 data.describe().T
 data.describe(include='all').T
 
@@ -57,6 +62,8 @@ print(cat_cols)
 print("Numerical Variable")
 print(num_cols)
 
+
+# EDA Univariate Analysis
 for col in num_cols:
     print(col)
     print("Skew :", round(data[col].skew(), 2))
@@ -83,6 +90,8 @@ axes[2][1].tick_params(labelrotation=90);
 
 
 
+# Data Transformation
+
 # function for log transform of column 
 def log_transform(data, col):
     for colname in col:
@@ -105,9 +114,10 @@ plt.show()
 
 
 
-
+#  bar plot
 fig, axarr = plt.subplots(4, 2, figsize=(12, 18))
 data.groupby('Location')['Price_log'].mean().sort_values(ascending=False).plot.bar(ax=axarr[0][0], fontsize=12)
+
 axarr[0][0].set_title("Location Vs Price", fontsize=18)
 data.groupby('Transmission')['Price_log'].mean().sort_values(ascending=False).plot.bar(ax=axarr[0][1], fontsize=12)
 axarr[0][1].set_title("Transmission Vs Price", fontsize=18)
@@ -160,3 +170,15 @@ data['Power'] = data.groupby(['Brand', 'Model'])['Power'].transform(lambda x: x.
 # Check missing values to confirm
 print("Missing values after cleanup:")
 print(data.isnull().sum())
+
+
+from pandas_profiling import ProfileReport
+
+# Generate the report
+
+profile = ProfileReport(data, title="EDA Report", explorative=True)
+
+
+
+# Save the report as HTML
+profile.to_file("eda_report.html")
