@@ -15,4 +15,4 @@ import graphviz
 
 
 bank_data['default'] = bank_data['default'].map({'no':0,'yes':1,'unknown':0})
-bank_data['y'] = bank_data['y'].map({'no':0,'yes':1})
+bank_data['y'] = bank_data['y'].map({'no':0,'yes':1})   
