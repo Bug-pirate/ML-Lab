@@ -5,7 +5,7 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split
 from pandas.core.common import random_state
 from sklearn.linear_model import LinearRegression
-import kagglehub  
+import kagglehub
 
 path = kagglehub.dataset_download("karthickveerakumar/salary-data-simple-linear-regression")
 
